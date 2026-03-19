@@ -29,7 +29,14 @@ export function AdminLogin() {
     if (result.success) {
       navigate('/admin/dashboard');
     } else {
-      setError(result.error || 'Credenziali non valide');
+      let errorMessage = result.error || 'Credenziali non valide';
+      
+      // Controllo specifico per errori di rete o configurazione mancante
+      if (errorMessage.includes('Failed to fetch') || errorMessage.includes('NetworkError')) {
+        errorMessage = 'Errore di rete: Verifica di aver inserito VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY nei Secrets (⚙️ in alto a destra) e che l\'URL sia corretto.';
+      }
+      
+      setError(errorMessage);
       setIsSubmitting(false);
     }
   };
