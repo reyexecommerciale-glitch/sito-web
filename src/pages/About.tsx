@@ -43,7 +43,7 @@ export function About() {
                   My approach blends strategic thinking with bold aesthetics. I believe that great work doesn't just look or sound good—it communicates, evokes emotion, and solves problems.
                 </p>
                 <p>
-                  Whether I'm building a brand from scratch, producing an immersive audio-visual experience, or art directing a campaign, my goal is always to create work that stands out and leaves a lasting impression.
+                 Mi chiamo Rey Carbone, ho 20 anni e lavoro nel mondo creativo da diversi anni. Sono graphic designer da 4 anni, produttore musicale da 5 e fotografo da 4. Unisco queste discipline per creare progetti visivi e sonori con uno stile unico e riconoscibile.
                 </p>
               </div>
             </motion.div>
