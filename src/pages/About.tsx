@@ -37,14 +37,16 @@ export function About() {
               
               <div className="space-y-6 text-lg md:text-xl text-text-muted font-light">
                 <p>
-                  I am a multidisciplinary creative based in New York. With over 8 years of experience, I specialize in creating visually striking and conceptually driven solutions across graphic design, photography, music production, and video editing.
+                      Rey Carbone — 20 anni.
+                      Graphic designer, music producer e fotografo.
+                      Da oltre 4 anni trasformo idee in esperienze visive e sonore, unendo creatività e identità in ogni proget   
                 </p>
                 <p>
-                  My approach blends strategic thinking with bold aesthetics. I believe that great work doesn't just look or sound good—it communicates, evokes emotion, and solves problems.
+                       Unisco visione strategica e forte impatto visivo.
+                        Per me, un progetto di valore non è solo bello o coinvolgente: deve comunicare, emozionare e avere uno scopo preciso.    
                 </p>
                 <p>
-                  Whether I'm building a brand from scratch, producing an immersive audio-visual experience, or art directing a campaign, my goal is always to create work that stands out and leaves a lasting impression.
-                </p>
+                        Che sia la creazione di un’identità da zero, la produzione di esperienze audio-visive o la direzione creativa di una campagna, punto sempre a realizzare progetti che si distinguono e restano impressi.                </p>
               </div>
             </motion.div>
 
