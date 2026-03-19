@@ -1,12 +1,14 @@
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Lock, Shield } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,6 +55,17 @@ export function Navbar() {
               {link.name}
             </Link>
           ))}
+          
+          <div className="w-px h-4 bg-white/20 mx-2"></div>
+          
+          <Link 
+            to={isAuthenticated ? "/admin/dashboard" : "/admin/login"}
+            className="flex items-center gap-2 text-sm font-medium tracking-wide uppercase transition-colors text-text-muted hover:text-accent"
+            title={isAuthenticated ? "Admin Dashboard" : "Admin Login"}
+          >
+            {isAuthenticated ? <Shield size={16} /> : <Lock size={16} />}
+            <span className="hidden lg:inline">{isAuthenticated ? 'Admin' : 'Login'}</span>
+          </Link>
         </nav>
 
         {/* Mobile Toggle */}
@@ -89,6 +102,21 @@ export function Navbar() {
               </Link>
             </motion.div>
           ))}
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: isOpen ? 1 : 0, y: isOpen ? 0 : 20 }}
+            transition={{ delay: isOpen ? navLinks.length * 0.1 : 0 }}
+            className="mt-8 pt-8 border-t border-white/10 w-3/4 text-center"
+          >
+            <Link 
+              to={isAuthenticated ? "/admin/dashboard" : "/admin/login"}
+              className="flex items-center justify-center gap-3 text-2xl font-display font-bold tracking-tighter text-text-muted hover:text-accent transition-colors"
+            >
+              {isAuthenticated ? <Shield size={24} /> : <Lock size={24} />}
+              {isAuthenticated ? 'Admin Dashboard' : 'Admin Login'}
+            </Link>
+          </motion.div>
         </motion.div>
       </div>
     </header>
