@@ -20,17 +20,13 @@ export function ContentEditor() {
     setFormData((prev: any) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSaving(true);
-    
-    // Simulate network delay
-    setTimeout(() => {
-      updateContent(activeSection, formData);
-      setIsSaving(false);
-      setSaveMessage('Modifiche salvate con successo!');
-      setTimeout(() => setSaveMessage(''), 3000);
-    }, 500);
+    await updateContent(activeSection, formData);
+    setIsSaving(false);
+    setSaveMessage('Modifiche salvate con successo!');
+    setTimeout(() => setSaveMessage(''), 3000);
   };
 
   const sections: { id: keyof SiteContent; label: string }[] = [

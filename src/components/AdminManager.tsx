@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { supabase } from '../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { UserPlus, Shield, AlertCircle, CheckCircle2, Key, Trash2 } from 'lucide-react';
 
 export function AdminManager() {
@@ -16,6 +16,15 @@ export function AdminManager() {
     e.preventDefault();
     setIsLoading(true);
     setMessage(null);
+
+    if (!isSupabaseConfigured) {
+      setMessage({
+        type: 'error',
+        text: 'Configura Supabase (URL e anon key) per gestire gli admin.'
+      });
+      setIsLoading(false);
+      return;
+    }
 
     try {
       const { data, error } = await supabase.auth.signUp({
@@ -50,6 +59,15 @@ export function AdminManager() {
     e.preventDefault();
     setIsPasswordLoading(true);
     setPasswordMessage(null);
+
+    if (!isSupabaseConfigured) {
+      setPasswordMessage({
+        type: 'error',
+        text: 'Configura Supabase (URL e anon key) per gestire gli admin.'
+      });
+      setIsPasswordLoading(false);
+      return;
+    }
 
     try {
       const { error } = await supabase.auth.updateUser({
