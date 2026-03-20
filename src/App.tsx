@@ -14,6 +14,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import { AdminLogin } from './pages/AdminLogin';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { CustomPageViewer } from './pages/CustomPageViewer';
+import backgroundVideo from './assets/background.mp4';
 
 export default function App() {
   const location = useLocation();
@@ -22,7 +23,20 @@ export default function App() {
     <AuthProvider>
       <ContentProvider>
         <ProjectProvider>
-          <div className="min-h-screen flex flex-col">
+          <div className="min-h-screen flex flex-col relative overflow-hidden">
+            {/* Global video background */}
+            <div className="fixed inset-0 -z-10 overflow-hidden">
+              <video
+                className="w-full h-full object-cover"
+                src={backgroundVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/65 to-black/75" />
+            </div>
+
             <Navbar />
             <main className="flex-grow">
               <AnimatePresence mode="wait">
