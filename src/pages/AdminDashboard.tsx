@@ -2,16 +2,17 @@ import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useProjects } from '../context/ProjectContext';
 import { PageTransition } from '../components/PageTransition';
-import { LogOut, Plus, Edit2, Trash2, Layout, FileText } from 'lucide-react';
+import { LogOut, Plus, Edit2, Trash2, Layout, FileText, Users } from 'lucide-react';
 import { ProjectFormModal } from '../components/ProjectFormModal';
 import { ContentEditor } from '../components/ContentEditor';
+import { AdminManager } from '../components/AdminManager';
 import { Project } from '../data/projects';
 
 export function AdminDashboard() {
   const { logout } = useAuth();
   const { projects, addProject, updateProject, deleteProject } = useProjects();
   
-  const [activeTab, setActiveTab] = useState<'projects' | 'content'>('projects');
+  const [activeTab, setActiveTab] = useState<'projects' | 'content' | 'admins'>('projects');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
 
@@ -88,6 +89,16 @@ export function AdminDashboard() {
             >
               <FileText size={20} /> Testi del Sito
             </button>
+            <button
+              onClick={() => setActiveTab('admins')}
+              className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-colors ${
+                activeTab === 'admins' 
+                  ? 'bg-white text-primary' 
+                  : 'bg-white/5 text-text-muted hover:bg-white/10 hover:text-white'
+              }`}
+            >
+              <Users size={20} /> Gestione Admin
+            </button>
           </div>
 
           {activeTab === 'projects' ? (
@@ -140,8 +151,10 @@ export function AdminDashboard() {
                 </table>
               </div>
             </div>
-          ) : (
+          ) : activeTab === 'content' ? (
             <ContentEditor />
+          ) : (
+            <AdminManager />
           )}
         </div>
       </section>

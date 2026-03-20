@@ -22,6 +22,8 @@ export function ContentProvider({ children }: { children: ReactNode }) {
           about: { ...defaultContent.about, ...parsed.about },
           contact: { ...defaultContent.contact, ...parsed.contact },
           footer: { ...defaultContent.footer, ...parsed.footer },
+          work: { ...defaultContent.work, ...parsed.work },
+          projectDetail: { ...defaultContent.projectDetail, ...parsed.projectDetail },
         });
       } catch (e) {
         setContent(defaultContent);
