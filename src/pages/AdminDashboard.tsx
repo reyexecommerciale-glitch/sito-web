@@ -2,17 +2,18 @@ import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useProjects } from '../context/ProjectContext';
 import { PageTransition } from '../components/PageTransition';
-import { LogOut, Plus, Edit2, Trash2, Layout, FileText, Users } from 'lucide-react';
+import { LogOut, Plus, Edit2, Trash2, Layout, FileText, Users, Layers } from 'lucide-react';
 import { ProjectFormModal } from '../components/ProjectFormModal';
 import { ContentEditor } from '../components/ContentEditor';
 import { AdminManager } from '../components/AdminManager';
+import { PageBuilder } from '../components/PageBuilder';
 import { Project } from '../data/projects';
 
 export function AdminDashboard() {
   const { logout } = useAuth();
   const { projects, addProject, updateProject, deleteProject } = useProjects();
   
-  const [activeTab, setActiveTab] = useState<'projects' | 'content' | 'admins'>('projects');
+  const [activeTab, setActiveTab] = useState<'projects' | 'content' | 'pages' | 'admins'>('projects');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
 
@@ -90,6 +91,16 @@ export function AdminDashboard() {
               <FileText size={20} /> Testi del Sito
             </button>
             <button
+              onClick={() => setActiveTab('pages')}
+              className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-colors ${
+                activeTab === 'pages' 
+                  ? 'bg-white text-primary' 
+                  : 'bg-white/5 text-text-muted hover:bg-white/10 hover:text-white'
+              }`}
+            >
+              <Layers size={20} /> Pagine
+            </button>
+            <button
               onClick={() => setActiveTab('admins')}
               className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-colors ${
                 activeTab === 'admins' 
@@ -153,6 +164,8 @@ export function AdminDashboard() {
             </div>
           ) : activeTab === 'content' ? (
             <ContentEditor />
+          ) : activeTab === 'pages' ? (
+            <PageBuilder />
           ) : (
             <AdminManager />
           )}

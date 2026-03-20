@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useContent } from '../context/ContentContext';
 import { SiteContent } from '../data/content';
+import { DisciplinesEditor, ExpertiseEditor } from './VisualEditors';
 
 export function ContentEditor() {
   const { content, updateContent } = useContent();
@@ -46,7 +47,27 @@ export function ContentEditor() {
 
     return Object.keys(formData).map((key) => {
       const isTextArea = key.includes('Description') || key.includes('Para') || key.includes('subtitle') || key.includes('Json');
+      const isImageUrl = key.toLowerCase().includes('image') || key.toLowerCase().includes('img') || key.toLowerCase().includes('url');
       const label = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+
+      // Custom editors for JSON fields
+      if (key === 'disciplinesJson') {
+        return (
+          <div key={key} className="mb-8">
+            <label className="block text-sm font-medium text-text-muted mb-4">{label}</label>
+            <DisciplinesEditor value={formData[key]} onChange={(val) => setFormData((prev: any) => ({ ...prev, [key]: val }))} />
+          </div>
+        );
+      }
+
+      if (key === 'expertiseJson') {
+        return (
+          <div key={key} className="mb-8">
+            <label className="block text-sm font-medium text-text-muted mb-4">{label}</label>
+            <ExpertiseEditor value={formData[key]} onChange={(val) => setFormData((prev: any) => ({ ...prev, [key]: val }))} />
+          </div>
+        );
+      }
 
       return (
         <div key={key} className="mb-4">
@@ -56,17 +77,24 @@ export function ContentEditor() {
               name={key}
               value={formData[key]}
               onChange={handleChange}
-              rows={key.includes('Json') ? 12 : 4}
-              className={`w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition-colors ${key.includes('Json') ? 'font-mono text-sm' : ''}`}
-            />
-          ) : (
-            <input
-              type="text"
-              name={key}
-              value={formData[key]}
-              onChange={handleChange}
+              rows={4}
               className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition-colors"
             />
+          ) : (
+            <div className="flex gap-4 items-start">
+              <input
+                type="text"
+                name={key}
+                value={formData[key]}
+                onChange={handleChange}
+                className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition-colors"
+              />
+              {isImageUrl && formData[key] && (
+                <div className="w-12 h-12 rounded-lg overflow-hidden shrink-0 border border-white/10 bg-black/20">
+                  <img src={formData[key]} alt="Preview" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                </div>
+              )}
+            </div>
           )}
         </div>
       );

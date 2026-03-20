@@ -31,6 +31,10 @@ export function Navbar() {
     { name: 'Music', path: '/work/music' },
     { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
+    ...(content.customPages || []).map(page => ({
+      name: page.title,
+      path: `/p/${page.slug}`
+    }))
   ];
 
   return (

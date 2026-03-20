@@ -24,6 +24,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
           footer: { ...defaultContent.footer, ...parsed.footer },
           work: { ...defaultContent.work, ...parsed.work },
           projectDetail: { ...defaultContent.projectDetail, ...parsed.projectDetail },
+          customPages: parsed.customPages || [],
         });
       } catch (e) {
         setContent(defaultContent);

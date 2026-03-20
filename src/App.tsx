@@ -13,6 +13,7 @@ import { ContentProvider } from './context/ContentContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AdminLogin } from './pages/AdminLogin';
 import { AdminDashboard } from './pages/AdminDashboard';
+import { CustomPageViewer } from './pages/CustomPageViewer';
 
 export default function App() {
   const location = useLocation();
@@ -41,6 +42,9 @@ export default function App() {
                       <AdminDashboard />
                     </ProtectedRoute>
                   } />
+                  
+                  {/* Catch-all for custom pages */}
+                  <Route path="/p/:slug" element={<CustomPageViewer />} />
                 </Routes>
               </AnimatePresence>
             </main>

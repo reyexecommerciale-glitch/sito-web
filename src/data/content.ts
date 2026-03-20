@@ -1,3 +1,18 @@
+export type BlockType = 'hero' | 'text' | 'image' | 'gallery' | 'video' | 'projects';
+
+export interface PageBlock {
+  id: string;
+  type: BlockType;
+  content: any; // Flexible content based on type
+}
+
+export interface CustomPage {
+  id: string;
+  slug: string;
+  title: string;
+  blocks: PageBlock[];
+}
+
 export interface SiteContent {
   home: {
     heroTitleLine1: string;
@@ -50,6 +65,7 @@ export interface SiteContent {
     linkedin: string;
     copyright: string;
   };
+  customPages: CustomPage[];
 }
 
 export const defaultContent: SiteContent = {
@@ -113,5 +129,6 @@ export const defaultContent: SiteContent = {
     dribbble: "#",
     linkedin: "#",
     copyright: "All rights reserved.",
-  }
+  },
+  customPages: []
 };
