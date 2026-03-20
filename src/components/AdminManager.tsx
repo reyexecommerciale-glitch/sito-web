@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { UserPlus, Shield, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { UserPlus, Shield, AlertCircle, CheckCircle2, Key, Trash2 } from 'lucide-react';
 
 export function AdminManager() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+
+  const [newPassword, setNewPassword] = useState('');
+  const [isPasswordLoading, setIsPasswordLoading] = useState(false);
+  const [passwordMessage, setPasswordMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
   const handleCreateAdmin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,6 +24,9 @@ export function AdminManager() {
       });
 
       if (error) {
+        if (error.message.includes('already registered') || error.message.includes('User already exists')) {
+          throw new Error('Un amministratore con questa email esiste già. Non è possibile creare duplicati.');
+        }
         throw error;
       }
 
@@ -36,6 +43,33 @@ export function AdminManager() {
       });
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleChangePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsPasswordLoading(true);
+    setPasswordMessage(null);
+
+    try {
+      const { error } = await supabase.auth.updateUser({
+        password: newPassword
+      });
+
+      if (error) throw error;
+
+      setPasswordMessage({
+        type: 'success',
+        text: 'Password aggiornata con successo!'
+      });
+      setNewPassword('');
+    } catch (error: any) {
+      setPasswordMessage({
+        type: 'error',
+        text: error.message || 'Errore durante l\'aggiornamento della password'
+      });
+    } finally {
+      setIsPasswordLoading(false);
     }
   };
 
@@ -102,24 +136,59 @@ export function AdminManager() {
           )}
         </div>
 
-        <div className="bg-white/5 rounded-2xl p-6 border border-white/10 h-fit">
-          <h3 className="text-lg font-medium mb-4 flex items-center gap-2">
-            <AlertCircle size={18} className="text-accent" /> Informazioni Importanti
-          </h3>
-          <ul className="space-y-4 text-sm text-text-muted">
-            <li className="flex gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-accent shrink-0 mt-2"></div>
-              <p>I nuovi amministratori avranno accesso completo a questa dashboard, inclusa la modifica dei progetti e dei testi del sito.</p>
-            </li>
-            <li className="flex gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-accent shrink-0 mt-2"></div>
-              <p>Se hai disabilitato la conferma via email nelle impostazioni di Supabase, la creazione di un nuovo utente potrebbe disconnetterti temporaneamente. In tal caso, basterà fare nuovamente il login.</p>
-            </li>
-            <li className="flex gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-accent shrink-0 mt-2"></div>
-              <p>Per rimuovere un amministratore o cambiare la sua password, dovrai accedere direttamente alla console del tuo progetto su Supabase (sezione Authentication).</p>
-            </li>
-          </ul>
+        <div className="space-y-8">
+          <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+            <h3 className="text-lg font-medium mb-4 flex items-center gap-2">
+              <Key size={18} /> Cambia la tua Password
+            </h3>
+            
+            <form onSubmit={handleChangePassword} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-text-muted mb-2">Nuova Password</label>
+                <input
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  required
+                  minLength={6}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition-colors"
+                  placeholder="Minimo 6 caratteri"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isPasswordLoading || newPassword.length < 6}
+                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-white/10 text-white font-medium rounded-xl hover:bg-white/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed mt-4"
+              >
+                {isPasswordLoading ? 'Aggiornamento...' : 'Aggiorna Password'}
+              </button>
+            </form>
+
+            {passwordMessage && (
+              <div className={`mt-4 p-4 rounded-xl flex items-start gap-3 ${
+                passwordMessage.type === 'success' ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20'
+              }`}>
+                {passwordMessage.type === 'success' ? <CheckCircle2 size={20} className="shrink-0 mt-0.5" /> : <AlertCircle size={20} className="shrink-0 mt-0.5" />}
+                <p className="text-sm leading-relaxed">{passwordMessage.text}</p>
+              </div>
+            )}
+          </div>
+
+          <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+            <h3 className="text-lg font-medium mb-4 flex items-center gap-2 text-red-400">
+              <Trash2 size={18} /> Eliminazione Amministratori
+            </h3>
+            <p className="text-sm text-text-muted leading-relaxed mb-4">
+              Per motivi di sicurezza imposti da Supabase, l'eliminazione di altri account amministratore non può essere effettuata direttamente da questa dashboard pubblica.
+            </p>
+            <p className="text-sm text-text-muted leading-relaxed">
+              Per eliminare un amministratore:
+              <br/>1. Accedi alla tua console Supabase
+              <br/>2. Vai nella sezione <strong>Authentication</strong> &gt; <strong>Users</strong>
+              <br/>3. Clicca sui tre puntini accanto all'utente e seleziona <strong>Delete user</strong>
+            </p>
+          </div>
         </div>
       </div>
     </div>
