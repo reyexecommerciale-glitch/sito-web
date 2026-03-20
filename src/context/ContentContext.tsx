@@ -36,15 +36,33 @@ export function ContentProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const updateContent = (section: keyof SiteContent, newSectionContent: any) => {
-    const updated = {
-      ...content,
-      [section]: {
-        ...content[section],
-        ...newSectionContent
+    setContent(prevContent => {
+      let updatedContentValue;
+      
+      const currentSectionValue = prevContent[section];
+      const resolvedNewContent = typeof newSectionContent === 'function' 
+        ? newSectionContent(currentSectionValue) 
+        : newSectionContent;
+      
+      if (section === 'customPages') {
+        updatedContentValue = Array.isArray(resolvedNewContent) ? resolvedNewContent : [];
+      } else {
+        updatedContentValue = Array.isArray(resolvedNewContent)
+          ? resolvedNewContent
+          : {
+              ...currentSectionValue,
+              ...resolvedNewContent
+            };
       }
-    };
-    setContent(updated);
-    localStorage.setItem('rey_site_content', JSON.stringify(updated));
+
+      const updated = {
+        ...prevContent,
+        [section]: updatedContentValue
+      };
+      
+      localStorage.setItem('rey_site_content', JSON.stringify(updated));
+      return updated;
+    });
   };
 
   return (

@@ -8,10 +8,9 @@ export function PageBuilder() {
   const [pages, setPages] = useState<CustomPage[]>(content.customPages || []);
   const [editingPageId, setEditingPageId] = useState<string | null>(null);
 
-  const savePages = (newPages: CustomPage[]) => {
-    setPages(newPages);
-    updateContent('customPages', newPages);
-  };
+  React.useEffect(() => {
+    setPages(content.customPages || []);
+  }, [content.customPages]);
 
   const handleAddPage = () => {
     const newPage: CustomPage = {
@@ -20,13 +19,23 @@ export function PageBuilder() {
       slug: `nuova-pagina-${Date.now()}`,
       blocks: []
     };
-    savePages([...pages, newPage]);
+    
+    updateContent('customPages', (prevPages: CustomPage[] = []) => {
+      const newPages = [...prevPages, newPage];
+      setPages(newPages);
+      return newPages;
+    });
+    
     setEditingPageId(newPage.id);
   };
 
   const handleDeletePage = (id: string) => {
     if (window.confirm('Sei sicuro di voler eliminare questa pagina?')) {
-      savePages(pages.filter(p => p.id !== id));
+      updateContent('customPages', (prevPages: CustomPage[] = []) => {
+        const newPages = prevPages.filter(p => p.id !== id);
+        setPages(newPages);
+        return newPages;
+      });
       if (editingPageId === id) setEditingPageId(null);
     }
   };
@@ -35,7 +44,11 @@ export function PageBuilder() {
     const page = pages.find(p => p.id === editingPageId);
     if (!page) return null;
     return <PageEditor page={page} onSave={(updated) => {
-      savePages(pages.map(p => p.id === updated.id ? updated : p));
+      updateContent('customPages', (prevPages: CustomPage[] = []) => {
+        const newPages = prevPages.map(p => p.id === updated.id ? updated : p);
+        setPages(newPages);
+        return newPages;
+      });
       setEditingPageId(null);
     }} onCancel={() => setEditingPageId(null)} />;
   }
@@ -139,7 +152,14 @@ function PageEditor({ page, onSave, onCancel }: { page: CustomPage, onSave: (p: 
           <input
             type="text"
             value={editedPage.title}
-            onChange={(e) => setEditedPage({ ...editedPage, title: e.target.value })}
+            onChange={(e) => {
+              const newTitle = e.target.value;
+              setEditedPage({ 
+                ...editedPage, 
+                title: newTitle,
+                slug: newTitle.toLowerCase().replace(/[^a-z0-9-]/g, '-')
+              });
+            }}
             className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition-colors"
           />
         </div>
