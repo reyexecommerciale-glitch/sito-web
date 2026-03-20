@@ -2,10 +2,12 @@ import { PageTransition } from '../components/PageTransition';
 import { motion } from 'motion/react';
 import { ArrowRight, Mail, MapPin, CheckCircle2, Loader2 } from 'lucide-react';
 import { useState, FormEvent, ChangeEvent } from 'react';
+import { useContent } from '../context/ContentContext';
 
 export function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const { content } = useContent();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -13,7 +15,7 @@ export function Contact() {
     
     // Simulate API call for form submission
     setTimeout(() => {
-      window.location.href = `mailto:hello@reycarbone.design?subject=Contact from ${formData.name}&body=${encodeURIComponent(formData.message)}%0A%0AFrom: ${encodeURIComponent(formData.email)}`;
+      window.location.href = `mailto:${content.contact.email}?subject=Contact from ${formData.name}&body=${encodeURIComponent(formData.message)}%0A%0AFrom: ${encodeURIComponent(formData.email)}`;
       setStatus('success');
       setFormData({ name: '', email: '', message: '' });
       
@@ -39,12 +41,12 @@ export function Contact() {
               transition={{ duration: 0.6 }}
             >
               <h1 className="text-5xl md:text-8xl font-display font-bold tracking-tighter mb-6">
-                LET'S <br />
-                <span className="text-gradient">CREATE</span> <br />
-                TOGETHER.
+                {content.contact.titleLine1} <br />
+                <span className="text-gradient">{content.contact.titleLine2}</span> <br />
+                {content.contact.titleLine3}
               </h1>
               <p className="text-xl text-text-muted font-light mb-12 max-w-md">
-                Currently available for freelance projects and exciting collaborations. Reach out and let's make something beautiful.
+                {content.contact.subtitle}
               </p>
 
               <div className="space-y-8">
@@ -52,15 +54,15 @@ export function Contact() {
                   <div className="w-12 h-12 rounded-full glass flex items-center justify-center text-accent">
                     <Mail size={20} />
                   </div>
-                  <a href="mailto:hello@reycarbone.design" className="hover:text-accent transition-colors">
-                    hello@reycarbone.design
+                  <a href={`mailto:${content.contact.email}`} className="hover:text-accent transition-colors">
+                    {content.contact.email}
                   </a>
                 </div>
                 <div className="flex items-center gap-4 text-lg">
                   <div className="w-12 h-12 rounded-full glass flex items-center justify-center text-accent">
                     <MapPin size={20} />
                   </div>
-                  <span className="text-text-muted">Brooklyn, New York</span>
+                  <span className="text-text-muted">{content.contact.address}</span>
                 </div>
               </div>
             </motion.div>

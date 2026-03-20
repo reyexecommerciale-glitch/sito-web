@@ -9,6 +9,7 @@ import { About } from './pages/About';
 import { Contact } from './pages/Contact';
 import { AuthProvider } from './context/AuthContext';
 import { ProjectProvider } from './context/ProjectContext';
+import { ContentProvider } from './context/ContentContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AdminLogin } from './pages/AdminLogin';
 import { AdminDashboard } from './pages/AdminDashboard';
@@ -18,33 +19,35 @@ export default function App() {
 
   return (
     <AuthProvider>
-      <ProjectProvider>
-        <div className="min-h-screen flex flex-col">
-          <Navbar />
-          <main className="flex-grow">
-            <AnimatePresence mode="wait">
-              {/* @ts-ignore - React Router v6 types don't include key, but AnimatePresence needs it */}
-              <Routes location={location} key={location.pathname}>
-                <Route path="/" element={<Home />} />
-                <Route path="/work" element={<Work />} />
-                <Route path="/work/:category" element={<Work />} />
-                <Route path="/project/:id" element={<ProjectDetail />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                
-                {/* Admin Routes */}
-                <Route path="/admin/login" element={<AdminLogin />} />
-                <Route path="/admin/dashboard" element={
-                  <ProtectedRoute>
-                    <AdminDashboard />
-                  </ProtectedRoute>
-                } />
-              </Routes>
-            </AnimatePresence>
-          </main>
-          <Footer />
-        </div>
-      </ProjectProvider>
+      <ContentProvider>
+        <ProjectProvider>
+          <div className="min-h-screen flex flex-col">
+            <Navbar />
+            <main className="flex-grow">
+              <AnimatePresence mode="wait">
+                {/* @ts-ignore - React Router v6 types don't include key, but AnimatePresence needs it */}
+                <Routes location={location} key={location.pathname}>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/work" element={<Work />} />
+                  <Route path="/work/:category" element={<Work />} />
+                  <Route path="/project/:id" element={<ProjectDetail />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/contact" element={<Contact />} />
+                  
+                  {/* Admin Routes */}
+                  <Route path="/admin/login" element={<AdminLogin />} />
+                  <Route path="/admin/dashboard" element={
+                    <ProtectedRoute>
+                      <AdminDashboard />
+                    </ProtectedRoute>
+                  } />
+                </Routes>
+              </AnimatePresence>
+            </main>
+            <Footer />
+          </div>
+        </ProjectProvider>
+      </ContentProvider>
     </AuthProvider>
   );
 }

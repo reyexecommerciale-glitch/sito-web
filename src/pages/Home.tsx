@@ -3,10 +3,12 @@ import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useProjects } from '../context/ProjectContext';
+import { useContent } from '../context/ContentContext';
 import { ProjectCard } from '../components/ProjectCard';
 
 export function Home() {
   const { projects } = useProjects();
+  const { content } = useContent();
 
   return (
     <PageTransition>
@@ -25,7 +27,7 @@ export function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <p className="text-accent font-medium tracking-widest uppercase mb-6">Graphic Designer & Art Director</p>
+              <p className="text-accent font-medium tracking-widest uppercase mb-6">{content.home.heroSubtitle}</p>
             </motion.div>
             
             <motion.h1 
@@ -34,9 +36,9 @@ export function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3 }}
             >
-              CRAFTING <br />
-              <span className="text-gradient">VISUAL</span> <br />
-              IDENTITIES.
+              {content.home.heroTitleLine1} <br />
+              <span className="text-gradient">{content.home.heroTitleLine2}</span> <br />
+              {content.home.heroTitleLine3}
             </motion.h1>
             
             <motion.p 
@@ -45,7 +47,7 @@ export function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.5 }}
             >
-              I transform concepts into compelling visual narratives. Specializing in brand identity, editorial design, and digital experiences.
+              {content.home.heroDescription}
             </motion.p>
             
             <motion.div 
@@ -84,8 +86,8 @@ export function Home() {
               viewport={{ once: true }}
               className="text-4xl md:text-6xl font-display font-bold tracking-tighter"
             >
-              SELECTED <br />
-              <span className="text-text-muted">PROJECTS</span>
+              {content.home.projectsTitleLine1} <br />
+              <span className="text-text-muted">{content.home.projectsTitleLine2}</span>
             </motion.h2>
             <Link to="/work" className="hidden md:flex items-center gap-2 text-accent hover:text-white transition-colors font-medium uppercase tracking-wider text-sm">
               View All <ArrowRight size={16} />
@@ -117,41 +119,43 @@ export function Home() {
             viewport={{ once: true }}
             className="text-4xl md:text-6xl font-display font-bold tracking-tighter mb-16"
           >
-            CREATIVE <br />
-            <span className="text-text-muted">DISCIPLINES</span>
+            {content.home.disciplinesTitleLine1} <br />
+            <span className="text-text-muted">{content.home.disciplinesTitleLine2}</span>
           </motion.h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[
-              { title: 'Design & Art Direction', desc: 'Brand identities, editorial design, and digital experiences.', path: '/work/design', img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2064&auto=format&fit=crop' },
-              { title: 'Photography', desc: 'Portrait, commercial, and editorial photography.', path: '/work/photography', img: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=2000&auto=format&fit=crop' },
-              { title: 'Video Editing', desc: 'Commercials, music videos, and promotional content.', path: '/work/video', img: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=2025&auto=format&fit=crop' },
-              { title: 'Music Production', desc: 'Audio engineering, mixing, and sound design.', path: '/work/music', img: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=2070&auto=format&fit=crop' }
-            ].map((discipline, index) => (
-              <motion.div
-                key={discipline.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Link to={discipline.path} className="group block relative overflow-hidden rounded-3xl aspect-video">
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-500 z-10" />
-                  <img 
-                    src={discipline.img} 
-                    alt={discipline.title} 
-                    className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 z-20 p-8 flex flex-col justify-end">
-                    <h3 className="text-3xl font-display font-bold mb-2 group-hover:text-accent transition-colors">{discipline.title}</h3>
-                    <p className="text-white/80 max-w-sm transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                      {discipline.desc}
-                    </p>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
+            {(() => {
+              try {
+                const disciplines = JSON.parse(content.home.disciplinesJson);
+                return disciplines.map((discipline: any, index: number) => (
+                  <motion.div
+                    key={discipline.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <Link to={discipline.path} className="group block relative overflow-hidden rounded-3xl aspect-video">
+                      <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-500 z-10" />
+                      <img 
+                        src={discipline.img} 
+                        alt={discipline.title} 
+                        className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                        referrerPolicy="no-referrer"
+                      />
+                      <div className="absolute inset-0 z-20 p-8 flex flex-col justify-end">
+                        <h3 className="text-3xl font-display font-bold mb-2 group-hover:text-accent transition-colors">{discipline.title}</h3>
+                        <p className="text-white/80 max-w-sm transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                          {discipline.desc}
+                        </p>
+                      </div>
+                    </Link>
+                  </motion.div>
+                ));
+              } catch (e) {
+                return <p className="text-red-500">Error loading disciplines data.</p>;
+              }
+            })()}
           </div>
         </div>
       </section>
@@ -166,16 +170,15 @@ export function Home() {
           >
             {[...Array(2)].map((_, i) => (
               <div key={i} className="flex gap-8 items-center">
-                <span className="text-6xl md:text-8xl font-display font-bold text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.2)' }}>BRANDING</span>
-                <span className="text-accent text-4xl">✦</span>
-                <span className="text-6xl md:text-8xl font-display font-bold text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.2)' }}>PHOTOGRAPHY</span>
-                <span className="text-accent text-4xl">✦</span>
-                <span className="text-6xl md:text-8xl font-display font-bold text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.2)' }}>VIDEO EDITING</span>
-                <span className="text-accent text-4xl">✦</span>
-                <span className="text-6xl md:text-8xl font-display font-bold text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.2)' }}>MUSIC PRODUCTION</span>
-                <span className="text-accent text-4xl">✦</span>
-                <span className="text-6xl md:text-8xl font-display font-bold text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.2)' }}>UI/UX</span>
-                <span className="text-accent text-4xl">✦</span>
+                {content.home.marqueeText.split('✦').map((text, index, array) => {
+                  if (!text.trim()) return null;
+                  return (
+                    <div key={index} className="flex gap-8 items-center">
+                      <span className="text-6xl md:text-8xl font-display font-bold text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.2)' }}>{text.trim()}</span>
+                      <span className="text-accent text-4xl">✦</span>
+                    </div>
+                  );
+                })}
               </div>
             ))}
           </motion.div>

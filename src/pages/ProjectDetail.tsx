@@ -1,12 +1,14 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { PageTransition } from '../components/PageTransition';
 import { useProjects } from '../context/ProjectContext';
+import { useContent } from '../context/ContentContext';
 import { motion } from 'motion/react';
 import { ArrowLeft } from 'lucide-react';
 
 export function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
   const { projects } = useProjects();
+  const { content } = useContent();
   const project = projects.find(p => p.id === id);
 
   if (!project) {
@@ -31,7 +33,7 @@ export function ProjectDetail() {
           
           <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 max-w-7xl mx-auto">
             <Link to={`/work/${project.type}`} className="inline-flex items-center gap-2 text-white/70 hover:text-white mb-8 transition-colors">
-              <ArrowLeft size={16} /> Back to {project.type.charAt(0).toUpperCase() + project.type.slice(1)}
+              <ArrowLeft size={16} /> {content.projectDetail.backToText} {project.type.charAt(0).toUpperCase() + project.type.slice(1)}
             </Link>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -53,17 +55,17 @@ export function ProjectDetail() {
               <div className="glass p-8 rounded-2xl sticky top-32">
                 <div className="space-y-6">
                   <div>
-                    <h4 className="text-sm text-text-muted uppercase tracking-wider mb-1">Client</h4>
+                    <h4 className="text-sm text-text-muted uppercase tracking-wider mb-1">{content.projectDetail.clientLabel}</h4>
                     <p className="text-lg font-medium">{project.client}</p>
                   </div>
                   <div className="w-full h-px bg-white/10" />
                   <div>
-                    <h4 className="text-sm text-text-muted uppercase tracking-wider mb-1">Role</h4>
+                    <h4 className="text-sm text-text-muted uppercase tracking-wider mb-1">{content.projectDetail.roleLabel}</h4>
                     <p className="text-lg font-medium">{project.role}</p>
                   </div>
                   <div className="w-full h-px bg-white/10" />
                   <div>
-                    <h4 className="text-sm text-text-muted uppercase tracking-wider mb-1">Year</h4>
+                    <h4 className="text-sm text-text-muted uppercase tracking-wider mb-1">{content.projectDetail.yearLabel}</h4>
                     <p className="text-lg font-medium">{project.year}</p>
                   </div>
                 </div>

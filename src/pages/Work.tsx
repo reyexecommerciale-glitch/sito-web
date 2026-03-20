@@ -2,11 +2,13 @@ import { useParams, Link } from 'react-router-dom';
 import { PageTransition } from '../components/PageTransition';
 import { motion } from 'motion/react';
 import { useProjects } from '../context/ProjectContext';
+import { useContent } from '../context/ContentContext';
 import { ProjectCard } from '../components/ProjectCard';
 
 export function Work() {
   const { category } = useParams<{ category: string }>();
   const { projects } = useProjects();
+  const { content } = useContent();
   
   const validCategories = ['design', 'photography', 'video', 'music'];
   const currentCategory = category && validCategories.includes(category) ? category : null;
@@ -39,11 +41,11 @@ export function Work() {
               {currentCategory ? (
                 <>{title}</>
               ) : (
-                <>ALL <span className="text-gradient">WORK</span></>
+                <>{content.work.titleLine1} <span className="text-gradient">{content.work.titleLine2}</span></>
               )}
             </h1>
             <p className="text-xl text-text-muted max-w-2xl font-light mb-12">
-              A curated selection of my projects spanning brand identity, digital product design, photography, video editing, and music production.
+              {content.work.description}
             </p>
 
             {/* Category Filters */}
@@ -77,7 +79,7 @@ export function Work() {
             </div>
           ) : (
             <div className="py-24 text-center text-text-muted">
-              <p className="text-xl">More projects coming soon.</p>
+              <p className="text-xl">{content.work.emptyStateText}</p>
             </div>
           )}
         </div>

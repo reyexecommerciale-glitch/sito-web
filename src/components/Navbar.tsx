@@ -3,12 +3,14 @@ import { motion } from 'motion/react';
 import { Menu, X, Lock, Shield } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useContent } from '../context/ContentContext';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const { isAuthenticated } = useAuth();
+  const { content } = useContent();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,7 +41,7 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
         <Link to="/" className="text-2xl font-display font-bold tracking-tighter z-50 relative">
-          REY<span className="text-accent">.</span>
+          {content.footer.name.split(' ')[0].toUpperCase()}<span className="text-accent">.</span>
         </Link>
 
         {/* Desktop Nav */}
