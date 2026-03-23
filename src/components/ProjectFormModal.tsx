@@ -153,9 +153,9 @@ export function ProjectFormModal({ isOpen, onClose, onSave, projectToEdit }: Pro
                 <label className="block text-sm font-medium text-text-muted mb-2">Tipo</label>
                 <select name="type" value={formData.type} onChange={handleChange} className="w-full bg-[#1a1a1a] border border-white/10 rounded-xl px-4 py-3 text-white focus:border-accent outline-none">
                   <option value="design">Design</option>
-                  <option value="photography">Photography</option>
+                  <option value="photography">Fotografia</option>
                   <option value="video">Video</option>
-                  <option value="music">Music</option>
+                  <option value="music">Musica</option>
                 </select>
               </div>
               <div>

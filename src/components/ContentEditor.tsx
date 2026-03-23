@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useContent } from '../context/ContentContext';
 import { SiteContent } from '../data/content';
-import { DisciplinesEditor, ExpertiseEditor } from './VisualEditors';
+import { DisciplinesEditor, ExpertiseEditor, TestimonialsEditor } from './VisualEditors';
 
 export function ContentEditor() {
   const { content, updateContent } = useContent();
@@ -65,6 +65,15 @@ export function ContentEditor() {
           <div key={key} className="mb-8">
             <label className="block text-sm font-medium text-text-muted mb-4">{label}</label>
             <ExpertiseEditor value={formData[key]} onChange={(val) => setFormData((prev: any) => ({ ...prev, [key]: val }))} />
+          </div>
+        );
+      }
+
+      if (key === 'testimonialsJson') {
+        return (
+          <div key={key} className="mb-8">
+            <label className="block text-sm font-medium text-text-muted mb-4">{label}</label>
+            <TestimonialsEditor value={formData[key]} onChange={(val) => setFormData((prev: any) => ({ ...prev, [key]: val }))} />
           </div>
         );
       }

@@ -26,6 +26,8 @@ export interface SiteContent {
     disciplinesTitleLine2: string;
     marqueeText: string;
     disciplinesJson: string;
+    testimonialsTitle: string;
+    testimonialsJson: string;
   };
   about: {
     titleLine1: string;
@@ -70,56 +72,62 @@ export interface SiteContent {
 
 export const defaultContent: SiteContent = {
   home: {
-    heroTitleLine1: "CRAFTING",
-    heroTitleLine2: "VISUAL",
-    heroTitleLine3: "IDENTITIES.",
+    heroTitleLine1: "CREAZIONE DI",
+    heroTitleLine2: "IDENTITÀ",
+    heroTitleLine3: "VISIVE.",
     heroSubtitle: "Graphic Designer & Art Director",
-    heroDescription: "I transform concepts into compelling visual narratives. Specializing in brand identity, editorial design, and digital experiences.",
-    projectsTitleLine1: "SELECTED",
-    projectsTitleLine2: "PROJECTS",
-    disciplinesTitleLine1: "CREATIVE",
-    disciplinesTitleLine2: "DISCIPLINES",
-    marqueeText: "BRANDING ✦ PHOTOGRAPHY ✦ VIDEO EDITING ✦ MUSIC PRODUCTION ✦ UI/UX ✦",
+    heroDescription: "Trasformo i concetti in narrazioni visive avvincenti. Specializzato in brand identity, editorial design ed esperienze digitali.",
+    projectsTitleLine1: "PROGETTI",
+    projectsTitleLine2: "SELEZIONATI",
+    disciplinesTitleLine1: "DISCIPLINE",
+    disciplinesTitleLine2: "CREATIVE",
+    marqueeText: "BRANDING ✦ FOTOGRAFIA ✦ VIDEO EDITING ✦ PRODUZIONE MUSICALE ✦ UI/UX ✦",
     disciplinesJson: JSON.stringify([
-      { title: 'Design & Art Direction', desc: 'Brand identities, editorial design, and digital experiences.', path: '/work/design', img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2064&auto=format&fit=crop' },
-      { title: 'Photography', desc: 'Portrait, commercial, and editorial photography.', path: '/work/photography', img: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=2000&auto=format&fit=crop' },
-      { title: 'Video Editing', desc: 'Commercials, music videos, and promotional content.', path: '/work/video', img: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=2025&auto=format&fit=crop' },
-      { title: 'Music Production', desc: 'Audio engineering, mixing, and sound design.', path: '/work/music', img: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=2070&auto=format&fit=crop' }
+      { title: 'Design & Art Direction', desc: 'Identità di marca, design editoriale ed esperienze digitali.', path: '/work/design', img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2064&auto=format&fit=crop' },
+      { title: 'Fotografia', desc: 'Fotografia ritrattistica, commerciale ed editoriale.', path: '/work/photography', img: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=2000&auto=format&fit=crop' },
+      { title: 'Video Editing', desc: 'Spot pubblicitari, video musicali e contenuti promozionali.', path: '/work/video', img: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=2025&auto=format&fit=crop' },
+      { title: 'Produzione Musicale', desc: 'Ingegneria del suono, mixaggio e sound design.', path: '/work/music', img: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=2070&auto=format&fit=crop' }
+    ], null, 2),
+    testimonialsTitle: "COSA DICONO I CLIENTI",
+    testimonialsJson: JSON.stringify([
+      { name: "Sarah Jenkins", quote: "Rey ha completamente trasformato la nostra brand identity. Il nuovo look è moderno, audace e cattura perfettamente la nostra visione." },
+      { name: "David Chen", quote: "Un vero piacere lavorare con lui. L'attenzione ai dettagli e la direzione creativa hanno superato tutte le nostre aspettative." },
+      { name: "Elena Rodriguez", quote: "La campagna video che Rey ha prodotto per noi è stata straordinaria. Ha generato un coinvolgimento record e ha davvero colpito il nostro pubblico." }
     ], null, 2),
   },
   about: {
-    titleLine1: "HI, I'M",
+    titleLine1: "CIAO, SONO",
     titleLine2: "REY.",
-    descriptionPara1: "I am a multidisciplinary creative based in New York. With over 8 years of experience, I specialize in creating visually striking and conceptually driven solutions across graphic design, photography, music production, and video editing.",
-    descriptionPara2: "My approach blends strategic thinking with bold aesthetics. I believe that great work doesn't just look or sound good—it communicates, evokes emotion, and solves problems.",
-    descriptionPara3: "Whether I'm building a brand from scratch, producing an immersive audio-visual experience, or art directing a campaign, my goal is always to create work that stands out and leaves a lasting impression.",
+    descriptionPara1: "Sono un creativo multidisciplinare con base a New York. Con oltre 8 anni di esperienza, sono specializzato nella creazione di soluzioni visivamente sorprendenti e concettualmente guidate attraverso graphic design, fotografia, produzione musicale e video editing.",
+    descriptionPara2: "Il mio approccio fonde pensiero strategico con un'estetica audace. Credo che un ottimo lavoro non debba solo essere bello da vedere o da ascoltare, ma debba comunicare, evocare emozioni e risolvere problemi.",
+    descriptionPara3: "Che stia costruendo un brand da zero, producendo un'esperienza audiovisiva immersiva o dirigendo artisticamente una campagna, il mio obiettivo è sempre quello di creare un lavoro che si distingua e lasci un'impressione duratura.",
     imageUrl: "https://images.unsplash.com/photo-1618077360395-f3068be8e001?q=80&w=2080&auto=format&fit=crop",
-    expertiseTitle: "EXPERTISE",
+    expertiseTitle: "COMPETENZE",
     expertiseJson: JSON.stringify([
-      { title: "Design & Art Direction", skills: ["Brand Identity", "UI/UX Design", "Typography", "Editorial Design", "Packaging", "Figma", "Adobe CC"] },
-      { title: "Photography", skills: ["Portrait Photography", "Commercial Photography", "Photo Retouching", "Lightroom", "Capture One"] },
-      { title: "Video Editing", skills: ["Commercial Editing", "Color Grading", "Motion Graphics", "Premiere Pro", "DaVinci Resolve", "After Effects"] },
-      { title: "Music Production", skills: ["Audio Engineering", "Mixing & Mastering", "Sound Design", "Ableton Live", "Logic Pro"] }
+      { title: "Design & Art Direction", skills: ["Brand Identity", "UI/UX Design", "Tipografia", "Design Editoriale", "Packaging", "Figma", "Adobe CC"] },
+      { title: "Fotografia", skills: ["Ritratti", "Fotografia Commerciale", "Fotoritocco", "Lightroom", "Capture One"] },
+      { title: "Video Editing", skills: ["Montaggio Commerciale", "Color Grading", "Motion Graphics", "Premiere Pro", "DaVinci Resolve", "After Effects"] },
+      { title: "Produzione Musicale", skills: ["Ingegneria del Suono", "Mix & Master", "Sound Design", "Ableton Live", "Logic Pro"] }
     ], null, 2),
   },
   work: {
-    titleLine1: "ALL",
-    titleLine2: "WORK",
-    description: "A curated selection of my projects spanning brand identity, digital product design, photography, video editing, and music production.",
-    emptyStateText: "More projects coming soon.",
+    titleLine1: "TUTTI I",
+    titleLine2: "LAVORI",
+    description: "Una selezione curata dei miei progetti che spaziano tra brand identity, digital product design, fotografia, video editing e produzione musicale.",
+    emptyStateText: "Altri progetti in arrivo presto.",
   },
   projectDetail: {
-    backToText: "Back to",
-    clientLabel: "Client",
-    roleLabel: "Role",
-    yearLabel: "Year",
+    backToText: "Torna a",
+    clientLabel: "Cliente",
+    roleLabel: "Ruolo",
+    yearLabel: "Anno",
   },
   contact: {
-    titleLine1: "LET'S",
-    titleLine2: "CREATE",
-    titleLine3: "TOGETHER.",
-    subtitle: "Currently available for freelance projects and exciting collaborations. Reach out and let's make something beautiful.",
-    email: "hello@reycarbone.design",
+    titleLine1: "CREIAMO",
+    titleLine2: "INSIEME.",
+    titleLine3: "",
+    subtitle: "Attualmente disponibile per progetti freelance e collaborazioni entusiasmanti. Contattami e creiamo qualcosa di bellissimo.",
+    email: "rey.exe.commerciale@outlook.it",
     address: "Brooklyn, New York",
   },
   footer: {
@@ -128,7 +136,7 @@ export const defaultContent: SiteContent = {
     behance: "#",
     dribbble: "#",
     linkedin: "#",
-    copyright: "All rights reserved.",
+    copyright: "Tutti i diritti riservati.",
   },
   customPages: []
 };

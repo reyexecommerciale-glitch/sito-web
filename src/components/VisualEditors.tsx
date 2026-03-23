@@ -184,3 +184,79 @@ export function ExpertiseEditor({ value, onChange }: ExpertiseEditorProps) {
     </div>
   );
 }
+
+interface TestimonialsEditorProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+export function TestimonialsEditor({ value, onChange }: TestimonialsEditorProps) {
+  let items: any[] = [];
+  try {
+    items = JSON.parse(value);
+  } catch (e) {
+    items = [];
+  }
+
+  const updateItem = (index: number, field: string, val: string) => {
+    const newItems = [...items];
+    newItems[index] = { ...newItems[index], [field]: val };
+    onChange(JSON.stringify(newItems, null, 2));
+  };
+
+  const addItem = () => {
+    const newItems = [...items, { name: 'Nuovo Cliente', quote: 'Testimonianza...' }];
+    onChange(JSON.stringify(newItems, null, 2));
+  };
+
+  const removeItem = (index: number) => {
+    const newItems = items.filter((_, i) => i !== index);
+    onChange(JSON.stringify(newItems, null, 2));
+  };
+
+  return (
+    <div className="space-y-4">
+      {items.map((item, index) => (
+        <div key={index} className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-4 relative group">
+          <button
+            type="button"
+            onClick={() => removeItem(index)}
+            className="absolute top-4 right-4 p-2 text-text-muted hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100"
+            title="Elimina"
+          >
+            <Trash2 size={18} />
+          </button>
+          
+          <div className="grid grid-cols-1 gap-4 pr-10">
+            <div>
+              <label className="block text-xs font-medium text-text-muted mb-1">Nome Cliente</label>
+              <input
+                type="text"
+                value={item.name || ''}
+                onChange={(e) => updateItem(index, 'name', e.target.value)}
+                className="w-full bg-black/20 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-accent"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-text-muted mb-1">Testimonianza</label>
+              <textarea
+                value={item.quote || ''}
+                onChange={(e) => updateItem(index, 'quote', e.target.value)}
+                rows={3}
+                className="w-full bg-black/20 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-accent"
+              />
+            </div>
+          </div>
+        </div>
+      ))}
+      
+      <button
+        type="button"
+        onClick={addItem}
+        className="flex items-center gap-2 px-4 py-2 bg-white/5 text-white rounded-lg hover:bg-white/10 transition-colors text-sm"
+      >
+        <Plus size={16} /> Aggiungi Testimonianza
+      </button>
+    </div>
+  );
+}

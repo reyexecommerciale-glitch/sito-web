@@ -21,7 +21,7 @@ export const projects: Project[] = [
     category: 'Brand Identity',
     client: 'Neon Nights LLC',
     year: '2025',
-    description: 'Complete brand identity and visual system for an electronic music festival. The goal was to capture the energy of the night with vibrant neon accents against deep dark backgrounds, creating a cohesive experience from digital tickets to physical stage design.',
+    description: 'Identità di marca completa e sistema visivo per un festival di musica elettronica. L\'obiettivo era catturare l\'energia della notte con vivaci accenti al neon su sfondi scuri, creando un\'esperienza coesa dai biglietti digitali al design fisico del palco.',
     coverImage: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1974&auto=format&fit=crop',
     images: [
       'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1974&auto=format&fit=crop',
@@ -37,7 +37,7 @@ export const projects: Project[] = [
     category: 'UI/UX Design',
     client: 'Aether Tech',
     year: '2024',
-    description: 'A dark-mode first financial dashboard designed for crypto traders. The interface focuses on data clarity while maintaining a premium, high-tech aesthetic through glassmorphism and subtle purple gradients.',
+    description: 'Una dashboard finanziaria in dark-mode progettata per i trader di criptovalute. L\'interfaccia si concentra sulla chiarezza dei dati mantenendo un\'estetica premium e high-tech attraverso il glassmorfismo e sottili gradienti viola.',
     coverImage: 'https://images.unsplash.com/photo-1642104704074-907c0698cbd9?q=80&w=2064&auto=format&fit=crop',
     images: [
       'https://images.unsplash.com/photo-1642104704074-907c0698cbd9?q=80&w=2064&auto=format&fit=crop',
@@ -52,7 +52,7 @@ export const projects: Project[] = [
     category: 'Packaging Design',
     client: 'Lumière Paris',
     year: '2024',
-    description: 'Luxury packaging design for a high-end skincare line. The design utilizes deep blacks with holographic foil stamping to create a mysterious yet elegant unboxing experience.',
+    description: 'Design del packaging di lusso per una linea di prodotti per la cura della pelle di fascia alta. Il design utilizza neri profondi con stampa a caldo olografica per creare un\'esperienza di unboxing misteriosa ma elegante.',
     coverImage: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=1974&auto=format&fit=crop',
     images: [
       'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=1974&auto=format&fit=crop',
@@ -67,7 +67,7 @@ export const projects: Project[] = [
     category: 'Editorial Design',
     client: 'Independent',
     year: '2023',
-    description: 'An avant-garde fashion and culture magazine. The editorial layout breaks traditional grid systems, using extreme typography scaling and stark contrast to create visual tension.',
+    description: 'Una rivista di moda e cultura all\'avanguardia. Il layout editoriale rompe i tradizionali sistemi a griglia, utilizzando un ridimensionamento estremo della tipografia e un forte contrasto per creare tensione visiva.',
     coverImage: 'https://images.unsplash.com/photo-1585807468504-9400ee1f2474?q=80&w=2070&auto=format&fit=crop',
     images: [
       'https://images.unsplash.com/photo-1585807468504-9400ee1f2474?q=80&w=2070&auto=format&fit=crop',
@@ -82,7 +82,7 @@ export const projects: Project[] = [
     category: 'Photography',
     client: 'Gallery 124',
     year: '2025',
-    description: 'A photographic exploration of brutalist architecture and urban decay in modern metropolises. Shot entirely on medium format film to capture the raw texture of the city.',
+    description: 'Un\'esplorazione fotografica dell\'architettura brutalista e del degrado urbano nelle metropoli moderne. Scattata interamente su pellicola medio formato per catturare la cruda texture della città.',
     coverImage: 'https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=2070&auto=format&fit=crop',
     images: [
       'https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=2070&auto=format&fit=crop',
@@ -97,7 +97,7 @@ export const projects: Project[] = [
     category: 'Music Production',
     client: 'Starlight Records',
     year: '2024',
-    description: 'Full audio production, mixing, and mastering for a 5-track synthwave EP. The project combines vintage analog synthesizers with modern electronic drum sequencing to create a nostalgic yet punchy soundscape.',
+    description: 'Produzione audio completa, mixaggio e mastering per un EP synthwave di 5 tracce. Il progetto combina sintetizzatori analogici vintage con la moderna programmazione di batterie elettroniche per creare un paesaggio sonoro nostalgico ma incisivo.',
     coverImage: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=2070&auto=format&fit=crop',
     images: [
       'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=2070&auto=format&fit=crop',
@@ -112,7 +112,7 @@ export const projects: Project[] = [
     category: 'Video Editing',
     client: 'Motion Athletics',
     year: '2024',
-    description: 'A high-energy promotional campaign video for an athletic wear brand. The editing features fast-paced cuts, dynamic speed ramping, and custom sound design to match the intensity of the athletes.',
+    description: 'Una campagna video promozionale ad alta energia per un marchio di abbigliamento sportivo. Il montaggio presenta tagli frenetici, speed ramping dinamico e sound design personalizzato per abbinarsi all\'intensità degli atleti.',
     coverImage: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=2071&auto=format&fit=crop',
     images: [
       'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=2071&auto=format&fit=crop',

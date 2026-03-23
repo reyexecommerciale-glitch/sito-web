@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { supabase } from '../lib/supabase';
+import { useContent } from '../context/ContentContext';
 import { UserPlus, Shield, AlertCircle, CheckCircle2, Key, Trash2 } from 'lucide-react';
 
 export function AdminManager() {
+  const { t } = useContent();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -25,21 +27,21 @@ export function AdminManager() {
 
       if (error) {
         if (error.message.includes('already registered') || error.message.includes('User already exists')) {
-          throw new Error('Un amministratore con questa email esiste già. Non è possibile creare duplicati.');
+          throw new Error(t('admin.manager.createErrorDuplicate'));
         }
         throw error;
       }
 
       setMessage({
         type: 'success',
-        text: 'Amministratore creato con successo! Se hai la conferma via email attivata su Supabase, il nuovo utente dovrà confermare l\'indirizzo prima di poter accedere.'
+        text: t('admin.manager.createSuccess')
       });
       setEmail('');
       setPassword('');
     } catch (error: any) {
       setMessage({
         type: 'error',
-        text: error.message || 'Errore durante la creazione dell\'amministratore'
+        text: error.message || t('admin.manager.createErrorGeneric')
       });
     } finally {
       setIsLoading(false);
@@ -60,13 +62,13 @@ export function AdminManager() {
 
       setPasswordMessage({
         type: 'success',
-        text: 'Password aggiornata con successo!'
+        text: t('admin.manager.updateSuccess')
       });
       setNewPassword('');
     } catch (error: any) {
       setPasswordMessage({
         type: 'error',
-        text: error.message || 'Errore durante l\'aggiornamento della password'
+        text: error.message || t('admin.manager.updateError')
       });
     } finally {
       setIsPasswordLoading(false);
@@ -80,20 +82,20 @@ export function AdminManager() {
           <Shield size={24} />
         </div>
         <div>
-          <h2 className="text-2xl font-display font-bold">Gestione Amministratori</h2>
-          <p className="text-text-muted text-sm mt-1">Aggiungi nuovi account con privilegi di amministrazione</p>
+          <h2 className="text-2xl font-display font-bold">{t('admin.manager.title')}</h2>
+          <p className="text-text-muted text-sm mt-1">{t('admin.manager.subtitle')}</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         <div>
           <h3 className="text-lg font-medium mb-4 flex items-center gap-2">
-            <UserPlus size={18} /> Nuovo Amministratore
+            <UserPlus size={18} /> {t('admin.manager.newAdmin')}
           </h3>
           
           <form onSubmit={handleCreateAdmin} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-2">Email</label>
+              <label className="block text-sm font-medium text-text-muted mb-2">{t('admin.manager.email')}</label>
               <input
                 type="email"
                 value={email}
@@ -105,7 +107,7 @@ export function AdminManager() {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-2">Password</label>
+              <label className="block text-sm font-medium text-text-muted mb-2">{t('admin.manager.password')}</label>
               <input
                 type="password"
                 value={password}
@@ -113,7 +115,7 @@ export function AdminManager() {
                 required
                 minLength={6}
                 className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition-colors"
-                placeholder="Minimo 6 caratteri"
+                placeholder={t('admin.manager.passwordMin')}
               />
             </div>
 
@@ -122,7 +124,7 @@ export function AdminManager() {
               disabled={isLoading || !email || password.length < 6}
               className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-white text-primary font-medium rounded-xl hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed mt-6"
             >
-              {isLoading ? 'Creazione in corso...' : 'Crea Amministratore'}
+              {isLoading ? t('admin.manager.creatingBtn') : t('admin.manager.createBtn')}
             </button>
           </form>
 
@@ -139,12 +141,12 @@ export function AdminManager() {
         <div className="space-y-8">
           <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
             <h3 className="text-lg font-medium mb-4 flex items-center gap-2">
-              <Key size={18} /> Cambia la tua Password
+              <Key size={18} /> {t('admin.manager.changePassword')}
             </h3>
             
             <form onSubmit={handleChangePassword} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-2">Nuova Password</label>
+                <label className="block text-sm font-medium text-text-muted mb-2">{t('admin.manager.newPassword')}</label>
                 <input
                   type="password"
                   value={newPassword}
@@ -152,7 +154,7 @@ export function AdminManager() {
                   required
                   minLength={6}
                   className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition-colors"
-                  placeholder="Minimo 6 caratteri"
+                  placeholder={t('admin.manager.passwordMin')}
                 />
               </div>
 
@@ -161,7 +163,7 @@ export function AdminManager() {
                 disabled={isPasswordLoading || newPassword.length < 6}
                 className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-white/10 text-white font-medium rounded-xl hover:bg-white/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed mt-4"
               >
-                {isPasswordLoading ? 'Aggiornamento...' : 'Aggiorna Password'}
+                {isPasswordLoading ? t('admin.manager.updatingBtn') : t('admin.manager.updateBtn')}
               </button>
             </form>
 
@@ -177,16 +179,13 @@ export function AdminManager() {
 
           <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
             <h3 className="text-lg font-medium mb-4 flex items-center gap-2 text-red-400">
-              <Trash2 size={18} /> Eliminazione Amministratori
+              <Trash2 size={18} /> {t('admin.manager.deleteTitle')}
             </h3>
             <p className="text-sm text-text-muted leading-relaxed mb-4">
-              Per motivi di sicurezza imposti da Supabase, l'eliminazione di altri account amministratore non può essere effettuata direttamente da questa dashboard pubblica.
+              {t('admin.manager.deleteDesc1')}
             </p>
-            <p className="text-sm text-text-muted leading-relaxed">
-              Per eliminare un amministratore:
-              <br/>1. Accedi alla tua console Supabase
-              <br/>2. Vai nella sezione <strong>Authentication</strong> &gt; <strong>Users</strong>
-              <br/>3. Clicca sui tre puntini accanto all'utente e seleziona <strong>Delete user</strong>
+            <p className="text-sm text-text-muted leading-relaxed whitespace-pre-line">
+              {t('admin.manager.deleteDesc2')}
             </p>
           </div>
         </div>
