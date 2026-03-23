@@ -43,11 +43,11 @@ export function AdminDashboard() {
     }
   };
 
-  const handleSaveProject = async (project: Project) => {
+  const handleSaveProject = (project: Project) => {
     if (editingProject) {
-      await updateProject(project.id, project);
+      updateProject(project.id, project);
     } else {
-      await addProject(project);
+      addProject(project);
     }
   };
 

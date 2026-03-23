@@ -6,7 +6,7 @@ import { Project, ProjectType } from '../data/projects';
 interface ProjectFormModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (project: Project) => Promise<void> | void;
+  onSave: (project: Project) => void;
   projectToEdit?: Project | null;
 }
 
@@ -98,13 +98,13 @@ export function ProjectFormModal({ isOpen, onClose, onSave, projectToEdit }: Pro
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.title || !formData.coverImage) {
       alert("Titolo e Immagine di copertina sono obbligatori.");
       return;
     }
-    await onSave(formData);
+    onSave(formData);
     onClose();
   };
 

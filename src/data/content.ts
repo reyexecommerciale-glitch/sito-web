@@ -119,7 +119,7 @@ export const defaultContent: SiteContent = {
     titleLine2: "CREATE",
     titleLine3: "TOGETHER.",
     subtitle: "Currently available for freelance projects and exciting collaborations. Reach out and let's make something beautiful.",
-    email: "rey.exe.commerciale@outlook.it",
+    email: "hello@reycarbone.design",
     address: "Brooklyn, New York",
   },
   footer: {

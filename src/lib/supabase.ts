@@ -17,10 +17,8 @@ if (supabaseAnonKey) {
   supabaseAnonKey = supabaseAnonKey.trim();
 }
 
-export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey && supabaseUrl !== 'https://placeholder.supabase.co' && supabaseAnonKey !== 'placeholder');
-
-if (!isSupabaseConfigured) {
-  console.error("ATTENZIONE: VITE_SUPABASE_URL o VITE_SUPABASE_ANON_KEY mancanti. Inseriscili nel file .env o nei Secrets di deployment per abilitare il salvataggio lato server.");
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error("ATTENZIONE: VITE_SUPABASE_URL o VITE_SUPABASE_ANON_KEY mancanti. Controlla i Secrets in AI Studio.");
 }
 
 export const supabase = createClient(

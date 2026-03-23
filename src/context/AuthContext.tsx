@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import { supabase, isSupabaseConfigured } from '../lib/supabase';
+import { supabase } from '../lib/supabase';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -15,17 +15,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!isSupabaseConfigured) {
-      setIsAuthenticated(false);
-      setIsLoading(false);
-      return;
-    }
-
     // Check active sessions and sets the user
     supabase.auth.getSession().then(({ data: { session } }) => {
       setIsAuthenticated(!!session);
       setIsLoading(false);
-    }).catch(() => setIsLoading(false));
+    });
 
     // Listen for changes on auth state (logged in, signed out, etc.)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -37,10 +31,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = async (email: string, pass: string) => {
-    if (!isSupabaseConfigured) {
-      return { success: false, error: 'Configurare Supabase per abilitare l’area admin.' };
-    }
-
     try {
       const { error } = await supabase.auth.signInWithPassword({
         email,
@@ -58,10 +48,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = async () => {
-    if (!isSupabaseConfigured) {
-      setIsAuthenticated(false);
-      return;
-    }
     const { error } = await supabase.auth.signOut();
     if (error) {
       console.error("Supabase signout error:", error);

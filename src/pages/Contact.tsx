@@ -6,39 +6,24 @@ import { useContent } from '../context/ContentContext';
 
 export function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
   const { content } = useContent();
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setStatus('submitting');
-
-    try {
-      // Use formsubmit.co to send email without backend
-      const res = await fetch('https://formsubmit.co/ajax/rey.exe.commerciale@outlook.it', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          message: formData.message
-        })
-      });
-
-      if (!res.ok) throw new Error('Errore invio');
-
+    
+    // Simulate API call for form submission
+    setTimeout(() => {
+      window.location.href = `mailto:${content.contact.email}?subject=Contact from ${formData.name}&body=${encodeURIComponent(formData.message)}%0A%0AFrom: ${encodeURIComponent(formData.email)}`;
       setStatus('success');
       setFormData({ name: '', email: '', message: '' });
-    } catch (err) {
-      // Fallback: mailto apre il client di posta dell'utente
-      window.location.href = `mailto:${content.contact.email}?subject=Contact from ${formData.name}&body=${encodeURIComponent(formData.message)}%0A%0AFrom: ${encodeURIComponent(formData.email)}`;
-      setStatus('error');
-    } finally {
-      setTimeout(() => setStatus('idle'), 3000);
-    }
+      
+      // Reset status after 3 seconds
+      setTimeout(() => {
+        setStatus('idle');
+      }, 3000);
+    }, 800);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

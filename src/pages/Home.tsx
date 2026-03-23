@@ -14,6 +14,12 @@ export function Home() {
     <PageTransition>
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+        {/* Abstract Background */}
+        <div className="absolute inset-0 z-0 opacity-30">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-secondary rounded-full mix-blend-screen filter blur-[128px] animate-pulse" style={{ animationDuration: '8s' }} />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent rounded-full mix-blend-screen filter blur-[128px] animate-pulse" style={{ animationDuration: '10s', animationDelay: '2s' }} />
+        </div>
+
         <div className="max-w-7xl mx-auto px-6 md:px-12 w-full relative z-10">
           <div className="max-w-4xl">
             <motion.div
@@ -71,7 +77,7 @@ export function Home() {
       </section>
 
       {/* Selected Work Section */}
-      <section className="py-24 md:py-32 relative z-10 bg-black/60 backdrop-blur-md">
+      <section className="py-24 md:py-32 relative z-10 bg-primary">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="flex justify-between items-end mb-16">
             <motion.h2 
@@ -105,7 +111,7 @@ export function Home() {
       </section>
       
       {/* Disciplines Section */}
-      <section className="py-24 md:py-32 relative z-10 bg-black/60 backdrop-blur-md">
+      <section className="py-24 md:py-32 relative z-10 bg-black">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
